@@ -8,26 +8,22 @@ platforms:
     wlp:
       archive:
         accept_license: true
-        base_url: http://192.168.1.10:8000
+        base_url: "https://public.dhe.ibm.com/ibmdl/export/pub/software/websphere/wasdev/downloads/wlp/8.5.5.2"
     java:
       install_flavor: oracle
-      jdk:
-        "6":
-          i586:
-            url: http://192.168.1.10:8000/jdk-6u51-fcs-bin-b11-linux-i586-06_jun_2013.bin
+      oracle:
+        accept_oracle_download_terms: true
 
-- name: centos-6.4
+- name: centos-6.5
   run_list:
   - recipe[test_helper::fix_permissions]
   attributes:
     wlp:
       archive:
         accept_license: true
-        base_url: http://192.168.1.10:8000
+        base_url: "https://public.dhe.ibm.com/ibmdl/export/pub/software/websphere/wasdev/downloads/wlp/8.5.5.2"
     java:
       install_flavor: oracle
-      jdk:
-        "6":
-          x86_64:
-            url: http://192.168.1.10:8000/jdk-6u51-fcs-bin-b11-linux-x64-06_jun_2013.bin
+      oracle:
+        accept_oracle_download_terms: true
 
