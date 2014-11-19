@@ -82,7 +82,9 @@ action :start do
              '/etc/init.d'
            end
 
-  template "#{init_d}/wlp-#{new_resource.server_name}" do
+  service_template = ""#{init_d}/wlp-#{new_resource.server_name}"
+
+  template service_template do
     cookbook "wlp"
     source "init.d.erb"
     mode "0755"
@@ -94,8 +96,10 @@ action :start do
       "cleanStart" => new_resource.clean, 
       "installDir" => installDir
     )
-
-    notifies :restart, "service[wlp-#{new_resource.server_name}]", :delayed
+    if ::File.exists?(service_template)
+      # only notify restart if its not the first run
+      notifies :restart, "service[wlp-#{new_resource.server_name}]", :delayed
+    end
   end
 
   service "wlp-#{new_resource.server_name}" do
