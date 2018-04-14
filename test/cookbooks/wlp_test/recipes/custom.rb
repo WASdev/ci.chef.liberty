@@ -17,15 +17,14 @@
 
 include_recipe "wlp::default"
 
-wlp_install_feature "mongodb" do
-  location "http://public.dhe.ibm.com/ibmdl/export/pub/software/websphere/wasdev/downloads/wlp/8.5.5.1/com.ibm.websphere.appserver.mongodb-2.0.esa"
+wlp_install_feature "mongodb-2.0" do
   accept_license true
 end
 
 wlp_server "testServer" do
   config ({
             "featureManager" => {
-              "onError" => "FAIL", 
+              "onError" => "FAIL",
               "feature" => [ "jsp-2.2", "mongodb-2.0" ]
             },
             "httpEndpoint" => {
