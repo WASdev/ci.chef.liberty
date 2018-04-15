@@ -17,7 +17,7 @@
 
 module Liberty
   class Utils
-    
+
     def initialize(node)
       @node = node.to_hash
     end
@@ -29,7 +29,7 @@ module Liberty
     def userDirectory
       return @node['wlp']['user_dir'] || "#{installDirectory}/usr"
     end
-    
+
     def serversDirectory
       return "#{userDirectory}/servers"
     end
@@ -41,11 +41,11 @@ module Liberty
     def serverDirectoryExists?(server_name)
       return ::File.exists?(serverDirectory(server_name))
     end
-    
+
     def user
       return @node['wlp']['user']
     end
-    
+
     def group
       return @node['wlp']['group']
     end
@@ -61,7 +61,7 @@ module Liberty
     def chown(file)
       FileUtils.chown(user, group, file)
     end
-    
+
     def autoVersionUrls
       require 'open-uri'
       version_yml  = YAML::load(open(@node['wlp']['archive']['version_yaml']))
@@ -74,7 +74,7 @@ module Liberty
           runtime_uri = ::URI.parse(value["uri"])
           # The newest version is the first one listed so break out after the first
           break
-        end 
+        end
         if use_beta && key.start_with?('20')
           runtime_uri = ::URI.parse(value["uri"])
           break
@@ -84,7 +84,7 @@ module Liberty
       extended = "#{runtime_uri}"
       extended.sub! '-runtime-', '-extended-'
       extras = "#{runtime_uri}"
-      extras.sub! '-runtime-', '-extras-'
+      extras.sub! '-runtime-', '-developers-extras-'
 
       return ["#{runtime_uri}", extended, extras]
     end

@@ -3,7 +3,15 @@
 # on how to configure and run the test-kitchen tests.
 #
 ---
-driver_plugin: vagrant
+driver:
+  name: vagrant
+
+provisioner:
+  product_name: chef
+  product_version: 12.22.3
+
+verifier:
+  name: inspec
 
 platforms:
 - name: ubuntu-14.04-i386
@@ -11,19 +19,28 @@ platforms:
 
 suites:
 - name: basic
-  run_list: 
-  - recipe[minitest-handler]
+  run_list:
   - recipe[wlp_test::basic]
+  verifier:
+    inspec_tests:
+      - path: test/smoke/basic
+  attributes:
+    wlp:
+      archive:
+        accept_license: true
 
 - name: custom
-  run_list: 
-  - recipe[minitest-handler]
+  run_list:
   - recipe[wlp_test::custom]
+  verifier:
+    inspec_tests:
+      - path: test/smoke/custom
   attributes:
     wlp:
       base_dir: /opt/liberty
       user_dir: /opt/liberty/user
       archive:
+        accept_license: true
         extended:
           install: false
         extras:
@@ -31,9 +48,13 @@ suites:
           base_dir: /opt/liberty-extra
 
 - name: app
-  run_list: 
-  - recipe[minitest-handler]
+  run_list:
   - recipe[wlp_test::app]
+  verifier:
+    inspec_tests:
+      - path: test/smoke/app
   attributes:
     wlp:
+      archive:
+        accept_license: true
       user_dir: /var/liberty
