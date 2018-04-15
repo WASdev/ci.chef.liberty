@@ -43,8 +43,8 @@ action :download do
 
   file "#{node[:wlp][:base_dir]}/wlp/etc/repositories.properties" do
     content "#{properties}"
-    owner 'wlp'
-    group 'wlpadmin'
+    owner node[:wlp][:user]
+    group node[:wlp][:group]
     mode '0644'
     action :create
   end
