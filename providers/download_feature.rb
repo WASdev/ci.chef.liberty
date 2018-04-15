@@ -49,12 +49,6 @@ action :download do
     action :create
   end
 
-  if new_resource.directory == nil
-    directory = node[:wlp][:base_dir]
-  else
-    directory = new_resource.directory
-  end
-
   if new_resource.name =~ /:\/\//
     name_uri = ::URI.parse(new_resource.name)
     name_filename = ::File.basename(name_uri.path)
@@ -68,7 +62,7 @@ action :download do
     name = new_resource.name
   end
   command = "#{@utils.installDirectory}/bin/installUtility download"
-  command << " --location=#{directory}"
+  command << " --location=#{new_resource.directory}"
   if new_resource.accept_license
     command << " --acceptLicense"
   end
